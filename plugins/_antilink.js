@@ -16,9 +16,9 @@ export async function before(m, { isAdmin, isBotAdmin }) {
         }
         await conn.sendButton(m.chat, `*Group link detect!*${isBotAdmin ? '' : '\n\n_Bot not admin_  t_t'}`, author, ['off antilink', '/disable antilink'], m)
         if (isBotAdmin && bot.restrict) {
+        	await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
            return conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: pesan, participant: hapus }})
-            await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-        } else if (!bot.restrict) return m.reply('Owner disable auto kick!')
+        } else if (!bot.restrict) return conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: pesan, participant: hapus }})
     }
     return !0
 }
